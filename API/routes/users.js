@@ -1,7 +1,24 @@
 const User = require("../models/User");
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
+const authenticate = (req, res, next) => {
+  console.log(req.headers["authorization"]);
+  const token = req.headers["authorization"];
+  if (!token) {
+    res.status(401).send("Unauthorized");
+  } else {
+    const JWT_SECRET = "Abgfjsdh";
+    const decoded = jwt.verify(token, JWT_SECRET);
+    if (!decoded) {
+      res.status(401).send("Invalid token");
+    } else {
+      req.user = decoded;
+      next();
+    }
+  }
+};
 //update user
 router.put("/:id", async (req, res) => {
   if (req.body.userId === req.params.id || req.body.isAdmin) {
@@ -69,7 +86,7 @@ router.get("/friends/:userId", async (req, res) => {
       const { _id, username, profilePicture } = friend;
       friendList.push({ _id, username, profilePicture });
     });
-    res.status(200).json(friendList)
+    res.status(200).json(friendList);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -116,6 +133,17 @@ router.put("/:id/unfollow", async (req, res) => {
     }
   } else {
     res.status(403).json("you cant unfollow yourself");
+  }
+});
+
+router.get("/getAllUser", authenticate, async (req, res) => {
+  try {
+    console.log(req.body.authorization);
+    const user = await User.find();
+    // const { password, updatedAt, ...other } = user._doc;
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 

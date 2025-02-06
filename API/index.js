@@ -11,12 +11,21 @@ const postRoute = require("./routes/posts");
 const conversationRoute = require("./routes/conversations");
 const messageRoute = require("./routes/messages");
 const cors = require("cors");
-// const router = express.Router();
+var bodyParser = require("body-parser");
+const router = express.Router();
 const path = require("path");
 
 dotenv.config();
-// app.use(cors);
-// app.use(express.json());
+app.use(cors());
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(helmet());
+app.use(morgan("common"));
+
+const port = 8800;
 // Mango DB connectedd***************
 mongoose
   .connect(process.env.MONGO_URL, {
@@ -34,10 +43,6 @@ mongoose
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 //middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(helmet());
-app.use(morgan("common"));
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -49,6 +54,11 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
 app.post("/api/upload", upload.single("file"), (req, res) => {
   try {
     return res.status(200).json("File uploded successfully");
@@ -63,6 +73,6 @@ app.use("/api/posts", postRoute);
 app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", messageRoute);
 
-app.listen(8800, () => {
-  console.log("Backend server is running!");
+app.listen(port, () => {
+  console.log("Backend server is running  Port 8800!");
 });

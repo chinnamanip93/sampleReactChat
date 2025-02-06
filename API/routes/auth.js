@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 //REGISTER
 router.post("/register", async (req, res) => {
@@ -28,6 +29,7 @@ router.post("/register", async (req, res) => {
 //LOGIN
 router.post("/login", async (req, res) => {
   try {
+    console.log(req.body);
     const user = await User.findOne({ email: req.body.email });
     !user && res.status(404).json("user not found");
 
@@ -36,8 +38,12 @@ router.post("/login", async (req, res) => {
       user.password
     );
     !validPassword && res.status(400).json("wrong password");
+    //res.send("hi im login function")
+    const JWT_SECRET = "Abgfjsdh";
+    let username = { username: user.username };
+    const token = await jwt.sign(username, JWT_SECRET, { expiresIn: "1h" });
 
-    res.status(200).json(user);
+    res.status(200).json(token);
   } catch (err) {
     res.status(500).json(err);
   }
