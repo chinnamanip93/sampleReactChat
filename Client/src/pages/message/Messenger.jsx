@@ -8,20 +8,40 @@ const Messenger = () => {
   const userInfo = useSelector((state) => state.user.usersInfo);
   const [newmessage, setNewmessage] = useState("");
   const [messages, setMessages] = useState("");
+  const [onlinuser, setonlineuser] = useState([]);
   const dispatch = useDispatch();
   const BACK_END_SOCKET_URI = "http://localhost:8900";
   const socket = io(BACK_END_SOCKET_URI);
 
   useEffect(() => {
-    socket.on("receiveMessage", (newmessage) => {
-      setNewmessage("");
-      setMessages((prevMessages) => [...prevMessages, newmessage]);
+    const socket = io(BACK_END_SOCKET_URI);
+    socket.emit("addUser", (userId, error) => {
+      if (error) {
+        alert(error);
+      }
+    });
+
+    socket.on("getUsers", (users, error) => {
+      if (error) {
+        alert(error);
+      }
+      setonlineuser(users);
     });
 
     return () => {
-      socket.off("receiveMessage");
+      socket.disconnect();
+      socket.off();
     };
   }, []);
+
+  useEffect(() => {
+    socket.on("getMessage", ({ senderId, receiverId, text }, error) => {
+      if (error) {
+        alert(error);
+      }
+      setMessages([...messages, { senderId, receiverId, text }]);
+    });
+  }, [messages]);
 
   useEffect(() => {
     dispatch(getAllUser());
@@ -29,6 +49,12 @@ const Messenger = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // socket.emit("getMessage", ({
+    //   text: newmessage,
+    //   senderId:
+
+    // })=>);
   };
   console.log(userInfo);
 
