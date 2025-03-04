@@ -21,16 +21,15 @@ export default function FullWidthGrid() {
     <>
       <Box sx={{ flexGrow: 1 }}>
         <Header />
-        <Grid container spacing={2}>
-          <Grid size={{ xs: 4, md: 8 }}>
+        <Grid container spacing={0}>
+          <Grid size={{ xs: 2 }}>
             <Item>xs=6 md=8</Item>
           </Grid>
-
-          <Grid size={{ xs: 6, md: 4 }}>
+          <Grid size={{ xs: 6 }}>
             <Item>xs=6 md=4</Item>
           </Grid>
 
-          <Grid size={{ xs: 2, md: 4 }}>
+          <Grid size={{ xs: 4 }}>
             <Item>xs=6 md=4</Item>
           </Grid>
         </Grid>
