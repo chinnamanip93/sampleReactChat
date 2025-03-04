@@ -23,7 +23,7 @@ const Login = () => {
     const res = await dispatch(loginUser(credentials));
     debugger;
     if (res.payload) {
-      navigate("/message");
+      navigate("/Home");
     }
   };
 

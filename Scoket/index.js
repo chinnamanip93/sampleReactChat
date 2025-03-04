@@ -28,20 +28,23 @@ io.on("connection", (socket) => {
   //when ceonnect
 
   //take userId and socketId from user
-  socket.on("addUser", (userId) => {
+  socket.on("addUser", (userId, callback) => {
     console.log("a user connected.");
     addUser(userId, socket.id);
     io.emit("getUsers", users);
+
+    callback();
   });
 
   //send and get message
-  socket.on("sendMessage", ({ senderId, receiverId, text }) => {
+  socket.on("sendMessage", ({ senderId, receiverId, text }, callback) => {
     const user = getUser(receiverId);
     io.to(user.socketId).emit("getMessage", {
       text,
       senderId,
       receiverId,
     });
+    callback();
   });
 
   //when disconnect
