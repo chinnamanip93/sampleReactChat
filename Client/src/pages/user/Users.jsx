@@ -35,6 +35,7 @@ const Users = () => {
                   src="/static/images/avatar/1.jpg"
                 />
               </ListItemAvatar>
+              ``
               <ListItemText
                 primary={item.username}
                 secondary={
