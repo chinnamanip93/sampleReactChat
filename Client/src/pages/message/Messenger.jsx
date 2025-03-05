@@ -69,10 +69,14 @@ const Messenger = () => {
     // </div>
 
     <>
-      <div class="container">
-        <form onSubmit={handleSubmit}>
-          <div class="col-75">
+      <div style={{ width: "100%", display: "flex", flexDirection: "row" }}>
+        <form
+          onSubmit={handleSubmit}
+          style={{ width: "100%", display: "flex", flexDirection: "row" }}
+        >
+          <div>
             <input
+              style={{ width: "100%" }}
               type="text"
               id="lname"
               name="lastname"
