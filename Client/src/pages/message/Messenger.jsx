@@ -3,7 +3,7 @@ import { getAllUser } from "../../features/user/userThunk";
 import { useDispatch, useSelector } from "react-redux";
 import { stepButtonClasses } from "@mui/material";
 import { io } from "socket.io-client";
-
+import "./Messenger.css";
 const Messenger = () => {
   const userInfo = useSelector((state) => state.user.usersInfo);
   const [newmessage, setNewmessage] = useState("");
@@ -59,33 +59,52 @@ const Messenger = () => {
   console.log(userInfo);
 
   return (
-    // <div>
-    //   UserDetails
-    //   {userInfo?.map((item, i) => (
-    //     <>
-    //       <p key={i}>{item.email}</p>
-    //     </>
-    //   ))}
-    // </div>
-
     <>
-      <div style={{ width: "100%", display: "flex", flexDirection: "row" }}>
+      {/* <div style={{ width: "100%", display: "flex", flexDirection: "row" }}>
         <form
           onSubmit={handleSubmit}
-          style={{ width: "100%", display: "flex", flexDirection: "row" }}
+          style={{
+            width: "100%",
+            bottom: 0,
+            position: "fixed",
+            textAlign: "center",
+            marginLeft: "20px",
+          }}
         >
-          <div>
-            <input
-              style={{ width: "100%" }}
-              type="text"
-              id="lname"
-              name="lastname"
-              placeholder="write something here.."
-              value={newmessage}
-              onChange={(e) => setNewmessage(e.target.value)}
-            />
-          </div>
-          <input type="submit" value="Submit" />
+          <input
+            type="text"
+            id="lname"
+            name="lastname"
+            placeholder="write something here.."
+            value={newmessage}
+            onChange={(e) => setNewmessage(e.target.value)}
+          />
+
+          <button type="submit">Send</button>
+        </form>
+      </div> */}
+
+      <div className="chatbox">
+        {/* <div className="messages">
+          {messages.map((message, index) => (
+            <div key={index} className="message">
+              {message}
+            </div>
+          ))}
+        </div> */}
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            id="lname"
+            name="lastname"
+            placeholder="write something here.."
+            value={newmessage}
+            onChange={(e) => setNewmessage(e.target.value)}
+            className="chat-input"
+          />
+          <button type="submit" className="send-button">
+            Send
+          </button>
         </form>
       </div>
     </>
