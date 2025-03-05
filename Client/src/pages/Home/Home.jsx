@@ -5,6 +5,7 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid2";
 import Header from "../header/Header.jsx";
 import Users from "../user/Users.jsx";
+import Messenger from "../message/Messenger.jsx";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#fff",
@@ -23,16 +24,16 @@ export default function FullWidthGrid() {
       <Box sx={{ flexGrow: 1 }}>
         <Header />
         <Grid container spacing={0}>
-          <Grid size={{ xs: 2 }}>
+          <Grid size={{ xs: 4 }}>
             <Users />
           </Grid>
-          <Grid size={{ xs: 6 }}>
-            <Item>xs=6 md=4</Item>
+          <Grid size={{ xs: 8 }}>
+            <Messenger />
           </Grid>
 
-          <Grid size={{ xs: 4 }}>
+          {/* <Grid size={{ xs: 4 }}>
             <Item>xs=6 md=4</Item>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Box>
     </>
