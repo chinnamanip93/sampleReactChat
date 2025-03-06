@@ -44,4 +44,5 @@
   width: 50px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+  position: fixed;
 }

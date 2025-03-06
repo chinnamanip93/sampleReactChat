@@ -87,9 +87,10 @@ const Messenger = () => {
       <div>
         <div
           style={{
+            marginTop: "10px",
             width: "100%",
             height: "460px",
-            overflow: "scroll",
+            overflowY: "scroll",
           }}
         >
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
